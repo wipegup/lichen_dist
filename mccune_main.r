@@ -1,7 +1,7 @@
  # Washington county data from APP
 input_file <- 'dist/WaCoMeF97.txt'
 output_directory <- 'dist'
-script_name <- 'mccune'
+script_name <- 'mccune_w_replacement'
 
 ## "sample" is the "little N" -- going ahead and varying from 100 to 1k by 50s
 sample_min <- 100
@@ -41,8 +41,8 @@ for (sample_size in seq(sample_min, sample_max, sample_step)) {
             # Exit if big_n gt big_n_max
             break
         }
-        # create array of size big_n sampling W/O replacement
-        big_n_array <- sample(taxa_list, big_n, replace=FALSE)
+        # create array of size big_n sampling W/ replacement
+        big_n_array <- sample(taxa_list, big_n, replace=TRUE)
 
         # prepare collections for storing iteration results
         simpsons <- c()
@@ -51,8 +51,8 @@ for (sample_size in seq(sample_min, sample_max, sample_step)) {
 
         # 1k times
         for (i in 1:iteration_num){
-            # create array of size little_n sampling from big_n_array W/O replacement
-            little_n_array <- sample(big_n_array, little_n, replace=FALSE)
+            # create array of size little_n sampling from big_n_array W/ replacement
+            little_n_array <- sample(big_n_array, little_n, replace=TRUE)
 
             # Group data for simpson and shannon 
             grouped_taxa <- data.frame(table(sapply(little_n_array, function(m) m)))
